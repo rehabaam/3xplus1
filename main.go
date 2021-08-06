@@ -8,38 +8,53 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"math/big"
 	"time"
 )
 
-// Starts the fun!!
+// Break the conjecture
 func main() {
 
-	// Choose a number and then start the timer
-	var num float64 = 3112412422142425353344343434424347435435435436346346443634627527527575230953665899508087094643634634431
+	// Choose a number
+	var num = new(big.Int)
+	num.Exp(big.NewInt(300), big.NewInt(5), nil)
+
+	// Starts the fun!!
+	check_conjecture(num)
+}
+
+// Starts the fun!!
+func check_conjecture(num *big.Int) {
+
+	// Start the timer
 	t1 := time.Now()
 
+	zero := big.NewInt(0)
+	one := big.NewInt(1)
+	two := big.NewInt(2)
+	three := big.NewInt(3)
+
 	// Print the initial number
-	fmt.Printf("First number %f\n", num)
+	fmt.Printf("First number %v\n", num)
 
 	for {
 
 		// Handle even cases
-		if isEven(num) {
+		if isEven(num, zero, two) {
 
 			// Print the input number
-			fmt.Printf("Is Even %f\n", num)
+			fmt.Printf("Is Even %v\n", num)
 
 			// Divide by 2
-			num = num / 2
+			num = num.Div(num, two)
 
 			// Print the new number
-			fmt.Printf("New half %f\n", num)
+			fmt.Printf("New half %v\n", num)
 			continue
 		}
 
 		// If it reaches 1, then stop, no need to get stuck in a forever loop
-		if num == 1 {
+		if num.Cmp(one) == 0 {
 
 			// Print the time taken for reaching 1
 			t2 := time.Now()
@@ -48,18 +63,19 @@ func main() {
 		}
 
 		// Print the input number
-		fmt.Printf("Is Odd %f\n", num)
+		fmt.Printf("Is Odd %v\n", num)
 
 		// Do 3x+1 magic
-		num = 3*num + 1
+		num = num.Add(num.Mul(num, three), one)
 
 		// Print the new number
-		fmt.Printf("new Even %f\n", num)
+		fmt.Printf("new Even %v\n", num)
 	}
 
 }
 
 // Just returns even or odd
-func isEven(x float64) bool {
-	return math.Mod(x, 2) == 0
+func isEven(x, zero, two *big.Int) bool {
+	mod := new(big.Int)
+	return zero.Cmp(mod.Mod(x, two)) == 0
 }
