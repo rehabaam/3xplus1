@@ -23,7 +23,7 @@ func main() {
 	check_conjecture(num)
 }
 
-// Starts the fun!!
+// validate Collatz conjecture 
 func check_conjecture(num *big.Int) {
 
 	// Start the timer
