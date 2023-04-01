@@ -17,7 +17,7 @@ func main() {
 
 	// Choose a number
 	var num = new(big.Int)
-	num.Exp(big.NewInt(300), big.NewInt(5), nil)
+	num.Exp(big.NewInt(314), big.NewInt(5), nil)
 
 	// Starts the fun!!
 	check_conjecture(num)
